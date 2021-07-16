@@ -13,3 +13,9 @@ $key=(Get-AzureRmStorageAccountKey -ResourceGroupName $(terraformstoragerg) -Acc
 
 Write-Host "##vso[task.setvariable variable=storagekey]$key"
 
+
+
+jitendra@Azure:~$ az group list --query '[?contains(`["terraformrg", "PULTerraform"]`, name)].name' --output tsv
+PULTerraform
+terraformrg
+jitendra@Azure:~$ az group list --query '[?contains(`["terraformrg", "PULTerraform"]`, name)].name' --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
